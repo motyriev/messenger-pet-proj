@@ -66,11 +66,9 @@ http://localhost:8000/login
 
 app creds:  
 http://localhost:8000/login  
-user123@test.com  
-123456
+user123@test.com:123456
 
 rabbitmq creds:  
-http://localhost:15672/#/
-guest  
-guest
+http://localhost:15672/#/  
+guest:guest
 
