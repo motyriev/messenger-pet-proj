@@ -70,7 +70,7 @@ user123@test.com
 123456
 
 rabbitmq creds:  
-http://localhost:15672/#/exchanges  
+http://localhost:15672/#/
 guest  
 guest
 
