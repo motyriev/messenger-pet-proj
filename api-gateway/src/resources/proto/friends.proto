@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package FriendsService;
+option php_namespace = "FriendsService";
+
+service FriendsService {
+    rpc GetFriendRequestsByUserId (GetFriendRequestsByUserIdRequest) returns (GetFriendRequestsByUserIdResponse);
+}
+
+message GetFriendRequestsByUserIdRequest {
+    int32 user_id = 1;
+}
+
+message GetFriendRequestsByUserIdResponse {
+    repeated FriendRequest friend_requests = 1;
+    repeated Friend friends = 2;
+}
+
+message FriendRequest {
+    int32 id = 1;
+    int32 requester_id = 2;
+}
+
+message Friend {
+    int32 FriendId = 1;
+}
+

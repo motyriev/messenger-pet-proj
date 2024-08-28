@@ -1,0 +1,84 @@
+services:
+    nginx:
+        image: nginx:latest
+        container_name: chat-nginx
+        ports:
+            - 8201:80
+        volumes:
+            - ./src:/var/www
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        links:
+            - app
+        networks:
+            - elk
+
+    app:
+      &base-app
+        container_name: chat-app
+        build:
+            context: .
+            dockerfile: docker/Dockerfile
+        command: php-fpm
+        volumes:
+            - ./src:/var/www
+        depends_on:
+            db:
+                condition: service_healthy
+        networks:
+            - elk
+        healthcheck:
+            test: [ "CMD-SHELL", "[ -f /var/www/vendor/autoload.php ] || exit 1" ]
+            interval: 5s
+            timeout: 10s
+            retries: 3
+
+    messages_queue:
+        <<: *base-app
+        container_name: chat-messages_queue
+        command: php artisan queue:work rabbitmq_message_store --queue=message_store_queue
+        tty: true
+        depends_on:
+            app:
+                condition: service_healthy
+        networks:
+            - elk
+
+    db:
+        image: mysql:5.7.22
+        container_name: chat-db
+        environment:
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        healthcheck:
+            test: [ "CMD-SHELL", "mysqladmin ping -h localhost -u ${MYSQL_USER} -p${MYSQL_PASSWORD}" ]
+            interval: 5s
+            timeout: 10s
+            retries: 5
+            start_period: 10s
+        volumes:
+            - db_data:/var/lib/mysql
+        ports:
+            - 33066:3306
+        tty: true
+        networks:
+            - elk
+
+    filebeat:
+        image: docker.elastic.co/beats/filebeat:7.9.3
+        container_name: chat-filebeat
+        volumes:
+            - ./docker/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+            - ./src/storage/logs:/var/www/storage/logs:ro
+            - /var/lib/docker/containers:/var/lib/docker/containers:ro
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+        networks:
+            - elk
+
+networks:
+    elk:
+        external: true
+
+volumes:
+    db_data:

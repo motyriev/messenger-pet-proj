@@ -1,0 +1,20 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/www/storage/logs/logs-*.log
+    json.keys_under_root: true
+    json.add_error_key: true
+    json.message_key: message
+    processors:
+      - add_docker_metadata: ~
+
+output.logstash:
+  hosts: ["elk-logstash:5044"]
+  bulk_max_size: 1000
+  worker: 1
+  pipelining: 1
+  compression_level: 3
+  loadbalance: true
+  backoff.init: 1s
+  backoff.max: 60s

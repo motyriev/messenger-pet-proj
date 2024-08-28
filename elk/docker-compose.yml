@@ -1,0 +1,55 @@
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    container_name: elk-elasticsearch
+    environment:
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xmx4g -Xmx4g
+    ports:
+      - 9200:9200
+      - 9300:9300
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - elk
+    restart: unless-stopped
+
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.9.3
+    container_name: elk-logstash
+    environment:
+      - pipeline.workers=2
+      - pipeline.batch.size=125
+      - queue.type=memory
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+    ports:
+      - 5044:5044
+      - 9600:9600
+    depends_on:
+      - elasticsearch
+    networks:
+      - elk
+    restart: unless-stopped
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.3
+    container_name: elk-kibana
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    networks:
+      - elk
+    restart: unless-stopped
+
+
+volumes:
+  esdata:
+    driver: local
+
+networks:
+  elk:
+    external: true
