@@ -51,19 +51,26 @@ cd ../friends && cp .env.example .env && docker-compose up --build -d
 # start chat service
 cd ../chat && cp .env.example .env && cp src/.env.example src/.env && docker-compose up --build -d
 
-# start frontend service
-cd ../front && cp .env.example .env && docker-compose up --build -d
-
 # start api gateway service
 cd ../api-gateway && cp .env.example .env && cp src/.env.example src/.env && docker-compose up --build -d 
+
+# start frontend service
+cd ../front && cp .env.example .env && docker-compose up --build -d
 
 # run test (optionally), migrations, seeds
 cd ../ && ./setup.sh
 ```
 
-Once all services are up and running, you can access the application by navigating to the following url in your browser:
+Once all services are up and running, please wait for the front service image to build, and then you can access the application by navigating to the following url in your browser:
 http://localhost:8000/login
 
-creds: 
+app creds:  
+http://localhost:8000/login  
+user123@test.com  
+123456
 
-user123@test.com:123456
+rabbitmq creds:  
+http://localhost:15672/#/exchanges  
+guest  
+guest
+
