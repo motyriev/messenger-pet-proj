@@ -27,13 +27,15 @@ class ChatRepository extends EloquentModelRepository implements ChatRepositoryIn
 
     public function create(array $userPairs): void
     {
-        $newChats = array_map(fn(UserPairDTO $pair) => ['user_1' => $pair->userId1, 'user_2' => $pair->userId2], $userPairs);
+        $newChats = array_map(fn(UserPairDTO $pair) => ['user_1' => $pair->userId1, 'user_2' => $pair->userId2],
+            $userPairs);
         $this->model()->insert($newChats);
     }
 
     public function getAllByUserId(int $userId): array
     {
-        $result = $this->model()->where(fn($query) => $query->where('user_1', $userId)->orWhere('user_2', $userId))->get();
+        $result = $this->model()->where(fn($query) => $query->where('user_1', $userId)->orWhere('user_2', $userId)
+        )->get();
         return $result->toArray();
     }
 

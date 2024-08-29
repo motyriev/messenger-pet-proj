@@ -11,9 +11,9 @@ class ChatTransformer implements Transformable
     public static function transform(array $chat): array
     {
         return [
-            'id' => $chat['id'],
-            'user1' => $chat['user_1'],
-            'user2' => $chat['user_2'],
+            'id'          => $chat['id'],
+            'user1'       => $chat['user_1'],
+            'user2'       => $chat['user_2'],
             'lastMessage' => $chat['lastMessage'] ?? ''
         ];
     }

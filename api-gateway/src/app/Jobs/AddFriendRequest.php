@@ -27,7 +27,8 @@ class AddFriendRequest implements ShouldQueue
      * Execute the job.
      */
     public function handle(): void
-    {}
+    {
+    }
 
     public function toArray(): array
     {

@@ -42,7 +42,8 @@ class FriendController extends Controller
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-            return response()->json(['message' => 'Failed to manage friend request'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(['message' => 'Failed to manage friend request'],
+                Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

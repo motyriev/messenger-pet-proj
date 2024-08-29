@@ -20,8 +20,8 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         $user = User::create([
-            'email' => $request->email,
-            'name' => $request->email,
+            'email'    => $request->email,
+            'name'     => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
@@ -60,7 +60,7 @@ class AuthController extends Controller
         $newToken = Auth::login($user);
 
         Log::info('Token refreshed', [
-            'userId' => $user->id,
+            'userId'      => $user->id,
             'userChatIds' => Auth::payload()->get('chatIds'),
         ]);
 
@@ -71,9 +71,9 @@ class AuthController extends Controller
     {
         return response()->json([
             'accessToken' => $token,
-            'tokenType' => 'bearer',
-            'expiresIn' => Auth::factory()->getTTL() * 60,
-            'user' => UserTransformer::transform(Auth::user())
+            'tokenType'   => 'bearer',
+            'expiresIn'   => Auth::factory()->getTTL() * 60,
+            'user'        => UserTransformer::transform(Auth::user())
         ]);
     }
 }

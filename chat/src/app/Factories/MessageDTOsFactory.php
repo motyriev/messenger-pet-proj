@@ -20,7 +20,10 @@ class MessageDTOsFactory implements MessageDTOsFactoryInterface
             $messageDTOs = [];
             foreach ($messages as $message) {
                 $ccMessage = ArrayHelper::convertKeysToCamelCase($message);
-                $ccMessage['userEmail'] = Redis::hget("user:{$ccMessage['userId']}", 'email') ?? (string)$ccMessage['userId'];
+                $ccMessage['userEmail'] = Redis::hget(
+                        "user:{$ccMessage['userId']}",
+                        "email"
+                    ) ?? (string)$ccMessage['userId'];
                 $messageDTOs[] = MessageDTO::fromArray($ccMessage);
             }
             return $messageDTOs;

@@ -28,5 +28,6 @@ class MessageStore implements ShouldQueue
      * Execute the job.
      */
     public function handle(): void
-    {}
+    {
+    }
 }

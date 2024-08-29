@@ -15,7 +15,10 @@ class DashboardServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(DashboardService::class, function ($app) {
-            $friendsServiceClient = new FriendsServiceClient(config('app.urls.friends_grpc'), ['credentials' => \Grpc\ChannelCredentials::createInsecure()]);
+            $friendsServiceClient = new FriendsServiceClient(
+                config('app.urls.friends_grpc'),
+                ['credentials' => \Grpc\ChannelCredentials::createInsecure()]
+            );
             $httpClient = new Client(['timeout' => 10.0]);
 
             return new DashboardService($friendsServiceClient, $httpClient);

@@ -46,7 +46,6 @@ class DashboardService
             $friends = $this->prepareFriends($chats, $userId);
 
             return $this->prepareDashboardData($friends, $responseData['friendRequests'], $users);
-
         } catch (DashboardException $e) {
             $this->logDashboardException($e, $userId);
         } catch (\Throwable $e) {
@@ -94,7 +93,10 @@ class DashboardService
             'userId2' => $friendId
         ]), $friendIds);
 
-        $response = $this->retryRequest(config('app.urls.chat_api') . "users/$userId/chats/initialize", ['userPairs' => $userPairs]);
+        $response = $this->retryRequest(
+            config('app.urls.chat_api') . "users/$userId/chats/initialize",
+            ['userPairs' => $userPairs]
+        );
 
         if ($response->getStatusCode() !== 200) {
             throw new DashboardException('Failed to fetch chats', $response->getStatusCode());

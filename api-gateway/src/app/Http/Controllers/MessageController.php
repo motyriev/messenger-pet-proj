@@ -8,7 +8,6 @@ use App\Http\Requests\GetMessagesRequest;
 use App\Http\Requests\MessageStoreRequest;
 use App\Jobs\MessageStore;
 use GuzzleHttp\Client;
-use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Motyriev\MyDTOLibrary\MessageStoreDTO;
@@ -20,7 +19,7 @@ class MessageController extends Controller
     {
         try {
             $client = new Client([
-                'timeout' => 10.0,
+                'timeout'  => 10.0,
                 'base_uri' => config('app.urls.chat_api'),
             ]);
 
@@ -29,7 +28,10 @@ class MessageController extends Controller
             ]);
 
             if ($response->getStatusCode() === 200) {
-                return response()->json(json_decode($response->getBody()->getContents(), true), $response->getStatusCode());
+                return response()->json(
+                    json_decode($response->getBody()->getContents(), true),
+                    $response->getStatusCode()
+                );
             }
 
             Log::error('Error fetching messages from external API', [
@@ -38,7 +40,6 @@ class MessageController extends Controller
             ]);
 
             return response()->json(['message' => 'Failed to fetch messages'], $response->getStatusCode());
-
         } catch (\Throwable $e) {
             Log::error('Error fetching messages', [
                 'error' => $e->getMessage(),

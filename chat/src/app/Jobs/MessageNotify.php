@@ -19,14 +19,14 @@ class MessageNotify implements ShouldQueue
      * Create a new job instance.
      */
     public function __construct(public MessageDTO $dto)
-    {}
+    {
+    }
 
     /**
      * Execute the job.
      */
     public function handle(): void
     {
-
     }
 
 

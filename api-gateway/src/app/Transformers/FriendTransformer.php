@@ -13,9 +13,9 @@ class FriendTransformer implements Transformable
     public static function transform(array $friend): array
     {
         return [
-            'id'    => (int)$friend['friendId'],
-            'email' => (string)Redis::hget("user:{$friend['friendId']}", 'email') ?? '',
-            'chatId' => (int)$friend['chatId'],
+            'id'          => (int)$friend['friendId'],
+            'email'       => (string)Redis::hget("user:{$friend['friendId']}", 'email') ?? '',
+            'chatId'      => (int)$friend['chatId'],
             'lastMessage' => (string)$friend['lastMessage'],
         ];
     }

@@ -24,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        App::bindMethod(MessageStore::class . '@handle', fn($job) => $job->handle(new MessageService(App::make(MessageRepositoryInterface::class))));
+        App::bindMethod(
+            MessageStore::class . '@handle',
+            fn($job) => $job->handle(new MessageService(App::make(MessageRepositoryInterface::class)))
+        );
     }
 }

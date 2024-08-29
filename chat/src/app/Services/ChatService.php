@@ -20,7 +20,7 @@ class ChatService
      */
     public function getOrCreate(array $userPairs): array
     {
-        Log::info('getOrCreate method called', ['userPairs' => $userPairs]);
+        Log::info(__METHOD__, ['userPairs' => $userPairs]);
 
         $existingChats = $this->repository->findExistingChats($userPairs);
         $existingPairs = $this->extractPairs($existingChats);
@@ -43,7 +43,7 @@ class ChatService
 
     public function getAllByUserId(int $userId): array
     {
-        Log::info('getAllByUserId method called', ['userId' => $userId]);
+        Log::info(__METHOD__, ['userId' => $userId]);
 
         $chats = $this->repository->getAllByUserId($userId);
 

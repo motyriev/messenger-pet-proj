@@ -30,7 +30,7 @@ abstract class EloquentModelRepository
     private function isSubclassBaseModel($eloquent): BaseModel
     {
         if (!is_subclass_of($eloquent, BaseModel::class)) {
-            throw new Exception(get_class($eloquent). ' don\'t extend for '. BaseModel::class);
+            throw new Exception(get_class($eloquent) . ' don\'t extend for ' . BaseModel::class);
         }
 
         return $eloquent;

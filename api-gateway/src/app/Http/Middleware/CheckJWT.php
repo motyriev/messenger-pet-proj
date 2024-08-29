@@ -26,12 +26,11 @@ class CheckJWT
             return response()->json([
                 'message' => 'Token Expired!',
             ], 401);
-
         } catch (TokenInvalidException|JWTException $e) {
             return response()->json([
                 'message' => 'Not Authorized!',
             ], 401);
-        } catch (\Throwable $t){
+        } catch (\Throwable $t) {
             Log::error("Exception occurred in " . __METHOD__, [
                 'message' => $t->getMessage(),
                 'trace'   => $t->getTraceAsString()

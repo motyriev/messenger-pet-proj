@@ -23,7 +23,7 @@ class ChatInitializeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userPairs' => ['required', 'array'],
+            'userPairs'           => ['required', 'array'],
             'userPairs.*.userId1' => ['required', 'numeric'],
             'userPairs.*.userId2' => ['required', 'numeric'],
         ];

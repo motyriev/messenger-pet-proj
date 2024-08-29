@@ -18,6 +18,7 @@ class UserController extends Controller
     {
         $this->dashboardService = $dashboardService;
     }
+
     public function getDashboard(Request $request, int $userId): JsonResponse
     {
         try {
@@ -26,8 +27,8 @@ class UserController extends Controller
         } catch (\Throwable $e) {
             Log::error('Error fetching dashboard', [
                 'userId' => $userId,
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
+                'error'  => $e->getMessage(),
+                'trace'  => $e->getTraceAsString(),
             ]);
             return response()->json(['message' => 'Failed to fetch dashboard'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }

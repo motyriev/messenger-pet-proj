@@ -18,13 +18,14 @@ class MessageSent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public function __construct(private MessageDTO $messageDTO)
-    {}
+    {
+    }
 
 
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('chat.'. $this->messageDTO->chatId),
+            new PrivateChannel('chat.' . $this->messageDTO->chatId),
         ];
     }
 

@@ -15,11 +15,11 @@ class LoggerMiddleware
         $traceId = $request->header('X-Trace-Id') ?? Str::uuid()->toString();
 
         Log::withContext([
-            'traceId' => $traceId,
-            'service' => config('app.name'),
-            'method' => $request->method(),
+            'traceId'      => $traceId,
+            'service'      => config('app.name'),
+            'method'       => $request->method(),
             'request_body' => $request->all(),
-            'url' => $request->url()
+            'url'          => $request->url()
         ]);
 
         $request->headers->set('X-Trace-Id', $traceId);

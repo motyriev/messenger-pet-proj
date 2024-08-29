@@ -33,7 +33,8 @@ class ChatController extends Controller
                 'trace'     => $t->getTraceAsString(),
                 'userPairs' => $request->validated('userPairs'),
             ]);
-            return Response::json(['data' => [], 'status' => Status::Failed->value, 'error' => $t->getMessage()], SymfonyResponse::HTTP_INTERNAL_SERVER_ERROR);
+            return Response::json(['data' => [], 'status' => Status::Failed->value, 'error' => $t->getMessage()],
+                SymfonyResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -47,7 +48,8 @@ class ChatController extends Controller
                 'trace'  => $t->getTraceAsString(),
                 'userId' => $userId,
             ]);
-            return Response::json(['data' => [], 'status' => Status::Failed->value, 'error' => $t->getMessage()], SymfonyResponse::HTTP_INTERNAL_SERVER_ERROR);
+            return Response::json(['data' => [], 'status' => Status::Failed->value, 'error' => $t->getMessage()],
+                SymfonyResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
